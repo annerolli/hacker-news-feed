@@ -12,6 +12,10 @@ export type TNewsItem = {
    */
   id: number;
   /**
+   * Ссылка на первоисточник
+   */
+  url: string;
+  /**
    * Автор статьи
    */
   by: string;
