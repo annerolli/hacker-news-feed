@@ -1,7 +1,7 @@
 import './styles';
 import { FC } from 'react';
-import { Feed } from '../pages/feed';
+import { RouterProvider } from './providers/router';
 
 export const App: FC = () => {
-  return <Feed />;
+  return <RouterProvider />;
 };
