@@ -1,7 +1,7 @@
 import './styles';
 import { FC } from 'react';
-import { Typography } from '@mui/material';
+import { Feed } from '../pages/feed';
 
 export const App: FC = () => {
-  return <Typography variant="h1">Hacker News</Typography>;
+  return <Feed />;
 };
