@@ -1,42 +1,46 @@
 import { Link, Typography } from '@mui/material';
 import { Container } from '@mui/system';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import {
-  HackerNewsApi,
-  TNewsItem,
-} from '../../shared/services/hacker-news-api';
+import { TNewsItemId } from '../../shared/services/hacker-news-api';
+import { useNewsItem } from '../../entities/news';
 
 type TParams = {
   newsItemId: string;
 };
 
 export const NewsItem: FC = () => {
-  const [newsItem, setNewsItem] = useState<TNewsItem | null>(null);
   const { newsItemId } = useParams<TParams>();
 
-  useEffect(() => {
-    if (newsItemId === undefined) return;
+  if (newsItemId === undefined) {
+    // redirect
+    return null;
+  }
 
-    HackerNewsApi.getNewsItem({ id: +newsItemId }).then((news) => {
-      setNewsItem(news);
-    });
-  }, [newsItemId]);
+  return <NewsItemApi itemId={+newsItemId} />;
+};
 
-  if (newsItem === null) return <p>loading</p>;
+type TProps = {
+  itemId: TNewsItemId;
+};
 
-  const date = new Date(newsItem.time * 1000);
+export const NewsItemApi: FC<TProps> = ({ itemId }) => {
+  const [news, hasFetchedEver] = useNewsItem(itemId);
+
+  if (!hasFetchedEver) return <p>loading...</p>;
+
+  const date = new Date(news.time * 1000);
 
   return (
     <Container maxWidth="lg" component="main">
       <header>
-        <Typography variant="h1">{newsItem.title}</Typography>
-        <Typography variant="subtitle1">{newsItem.by}</Typography>
+        <Typography variant="h1">{news.title}</Typography>
+        <Typography variant="subtitle1">{news.by}</Typography>
         <Typography variant="caption" component="time">
           {date.toString()}
         </Typography>
         <br />
-        <Link href={newsItem.url} target="_blank" rel="noopener">
+        <Link href={news.url} target="_blank" rel="noopener">
           Open in sourse
         </Link>
       </header>
