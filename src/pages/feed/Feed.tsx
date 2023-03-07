@@ -1,23 +1,10 @@
-import { FC, useEffect, useState } from 'react';
-import {
-  HackerNewsApi,
-  TNewsList,
-} from '../../shared/services/hacker-news-api';
+import { FC } from 'react';
 import { FeedItemApi } from './FeedItemApi';
 import { List, ListItem, Typography } from '@mui/material';
+import { useNewsList } from '../../entities/news';
 
 export const Feed: FC = () => {
-  const [list, setList] = useState<TNewsList | null>(null);
-
-  useEffect(() => {
-    HackerNewsApi.getNewsList()
-      .then((news) => {
-        setList(news.slice(0, 10));
-      })
-      .catch(() => {
-        setList([]);
-      });
-  }, []);
+  const list = useNewsList();
 
   if (list === null) {
     return <Typography variant="body1">loading...</Typography>;
