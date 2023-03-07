@@ -1,16 +1,16 @@
-export type TNewsListItem = number;
+export type TNewsListItem = TNewsItemId;
 
 export type TNewsList = TNewsListItem[];
 
 export type TGetNewsItemOptions = {
-  id: number;
+  id: TNewsItemId;
 };
 
 export type TNewsItem = {
   /**
    * Идентефикатор
    */
-  id: number;
+  id: TNewsItemId;
   /**
    * Ссылка на первоисточник
    */
@@ -32,3 +32,5 @@ export type TNewsItem = {
    */
   score: number;
 };
+
+export type TNewsItemId = number;
