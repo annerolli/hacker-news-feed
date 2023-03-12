@@ -3,24 +3,13 @@ import { assertComment, assertStory } from './hacker-news-api.lib';
 import {
   TComment,
   TGetItemOptions,
-  TGetNewsItemOptions,
   TItem,
   TItemId,
-  TNewsItem,
-  TNewsList,
   TStory,
 } from './hacker-news-api.types';
 
 class HackerNewsApi implements IHackerNewsApi {
   private readonly host = 'https://hacker-news.firebaseio.com/v0/';
-
-  getNewsList(): Promise<TNewsList> {
-    return this.callApiMethod('newstories.json?print=pretty');
-  }
-
-  getNewsItem({ id }: TGetNewsItemOptions): Promise<TNewsItem> {
-    return this.callApiMethod(`item/${id}.json?print=pretty`);
-  }
 
   getItem({ itemId }: TGetItemOptions): Promise<TItem> {
     return this.callApiMethod(`item/${itemId}.json?print=pretty`);

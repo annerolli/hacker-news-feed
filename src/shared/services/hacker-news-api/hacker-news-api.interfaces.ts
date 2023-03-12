@@ -1,11 +1,8 @@
 import {
   TComment,
   TGetItemOptions,
-  TGetNewsItemOptions,
   TItem,
   TItemId,
-  TNewsItem,
-  TNewsList,
   TStory,
 } from './hacker-news-api.types';
 
@@ -29,17 +26,4 @@ export interface IHackerNewsApi {
    * Запрашивает сущность, являющуюся TComment, по идентификатору
    */
   getComment(options: TGetItemOptions): Promise<TComment>;
-
-  /**
-   * @deprecated Используй getNewStories
-   * Запрашивает список новостей
-   */
-  getNewsList(): Promise<TNewsList>;
-
-  /**
-   * @deprecated Используй getStory
-   * Запрашивает конкретную новость
-   * @param options параметры запроса (айди новости, сопутствующие данные)
-   */
-  getNewsItem(options: TGetNewsItemOptions): Promise<TNewsItem>;
 }

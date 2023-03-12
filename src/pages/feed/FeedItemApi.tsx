@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { TNewsItemId } from '../../shared/services/hacker-news-api';
+import { TItemId } from '../../shared/services/hacker-news-api';
 import { useNewsItem } from '../../entities/news';
 import { FeedItem } from './FeedItem';
 
 type TProps = {
-  itemId: TNewsItemId;
+  itemId: TItemId;
 };
 
 export const FeedItemApi: FC<TProps> = ({ itemId }) => {

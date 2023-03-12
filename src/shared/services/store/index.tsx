@@ -6,12 +6,12 @@ import {
   useReducer,
   Dispatch,
 } from 'react';
-import { TNewsItem, TNewsItemId, TNewsList } from '../hacker-news-api';
+import { TItemId, TStory } from '../hacker-news-api';
 
 type TState = {
   news: {
-    ids: TNewsList | null;
-    storage: Record<TNewsItemId, TNewsItem>;
+    ids: TItemId[] | null;
+    storage: Record<TItemId, TStory>;
   };
 };
 

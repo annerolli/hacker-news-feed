@@ -14,7 +14,7 @@ export function useNewsList() {
   useEffect(() => {
     if (hasFetchedEver) return;
 
-    HackerNewsApi.getNewsList()
+    HackerNewsApi.getNewStories()
       .then((news) => {
         dispatch({
           type: 'set_news_ids',

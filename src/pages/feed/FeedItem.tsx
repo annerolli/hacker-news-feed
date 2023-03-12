@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { TNewsItem } from '../../shared/services/hacker-news-api';
 import { Typography, Rating } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { TStory } from '../../shared/services/hacker-news-api';
 
-type TProps = { data: TNewsItem };
+type TProps = { data: TStory };
 
 export const FeedItem: FC<TProps> = ({ data }) => {
   const date = new Date(data.time * 1000);

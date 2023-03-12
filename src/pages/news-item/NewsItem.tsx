@@ -2,7 +2,7 @@ import { Link, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { TNewsItemId } from '../../shared/services/hacker-news-api';
+import { TItemId } from '../../shared/services/hacker-news-api';
 import { useNewsItem } from '../../entities/news';
 
 type TParams = {
@@ -21,7 +21,7 @@ export const NewsItem: FC = () => {
 };
 
 type TProps = {
-  itemId: TNewsItemId;
+  itemId: TItemId;
 };
 
 export const NewsItemApi: FC<TProps> = ({ itemId }) => {
