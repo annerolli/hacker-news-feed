@@ -1,8 +1,14 @@
 import { IHackerNewsApi } from './hacker-news-api.interfaces';
+import { assertComment, assertStory } from './hacker-news-api.lib';
 import {
+  TComment,
+  TGetItemOptions,
   TGetNewsItemOptions,
+  TItem,
+  TItemId,
   TNewsItem,
   TNewsList,
+  TStory,
 } from './hacker-news-api.types';
 
 class HackerNewsApi implements IHackerNewsApi {
@@ -14,6 +20,34 @@ class HackerNewsApi implements IHackerNewsApi {
 
   getNewsItem({ id }: TGetNewsItemOptions): Promise<TNewsItem> {
     return this.callApiMethod(`item/${id}.json?print=pretty`);
+  }
+
+  getItem({ itemId }: TGetItemOptions): Promise<TItem> {
+    return this.callApiMethod(`item/${itemId}.json?print=pretty`);
+  }
+
+  getStory(options: TGetItemOptions): Promise<TStory> {
+    return this.getItem(options).then((item) => {
+      if (!assertStory(item)) {
+        throw new Error(`Item with id ${options.itemId} is not a Story`);
+      }
+
+      return item;
+    });
+  }
+
+  getNewStories(): Promise<TItemId[]> {
+    return this.callApiMethod('newstories.json?print=pretty');
+  }
+
+  getComment(options: TGetItemOptions): Promise<TComment> {
+    return this.getItem(options).then((item) => {
+      if (!assertComment(item)) {
+        throw new Error(`Item with id ${options.itemId} is not a Comment`);
+      }
+
+      return item;
+    });
   }
 
   private callApiMethod(url: string) {
@@ -30,3 +64,9 @@ class HackerNewsApi implements IHackerNewsApi {
 const instance = new HackerNewsApi();
 
 export { instance as HackerNewsApi };
+
+instance
+  .getStory({
+    itemId: 35121963,
+  })
+  .then(console.log, console.log);

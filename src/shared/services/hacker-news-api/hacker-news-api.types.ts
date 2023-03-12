@@ -34,3 +34,38 @@ export type TNewsItem = {
 };
 
 export type TNewsItemId = number;
+
+export type TItem = {
+  id: TItemId;
+  type?: 'story' | 'comment';
+  title?: string;
+  text?: string;
+  by?: string;
+  time?: number;
+  score?: number;
+  parent?: TItemId;
+  kids?: TItemId[];
+};
+
+export type TItemId = number;
+
+export type TGetItemOptions = {
+  itemId: TItemId;
+};
+
+export type TStory = TItem & {
+  type: 'story';
+  title: string;
+  text: string;
+  by: string;
+  time: number;
+  score: number;
+};
+
+export type TComment = TItem & {
+  type: 'comment';
+  text: string;
+  by: string;
+  time: number;
+  parent: TItemId;
+};
