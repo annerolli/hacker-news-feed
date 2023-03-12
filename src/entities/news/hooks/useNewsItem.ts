@@ -5,13 +5,13 @@ import {
   TNewsItemId,
 } from '../../../shared/services/hacker-news-api';
 import {
-  useStoreSetState,
+  useStoreDispatch,
   useStoreState,
 } from '../../../shared/services/store';
 
 export function useNewsItem(itemId: TNewsItemId): [TNewsItem, boolean] {
   const store = useStoreState();
-  const setStore = useStoreSetState();
+  const dispatch = useStoreDispatch();
   const news = store.news.storage[itemId];
   const hasFetchedEver = news !== undefined;
 
@@ -21,17 +21,9 @@ export function useNewsItem(itemId: TNewsItemId): [TNewsItem, boolean] {
     }
 
     HackerNewsApi.getNewsItem({ id: itemId }).then((news) => {
-      setStore((state) => {
-        return {
-          ...state,
-          news: {
-            ...state.news,
-            storage: {
-              ...state.news.storage,
-              [itemId]: news,
-            },
-          },
-        };
+      dispatch({
+        type: 'add_news_item',
+        payload: news,
       });
     });
   }, [itemId, news]);

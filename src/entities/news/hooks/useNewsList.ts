@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { HackerNewsApi } from '../../../shared/services/hacker-news-api';
 import {
-  useStoreSetState,
+  useStoreDispatch,
   useStoreState,
 } from '../../../shared/services/store';
 
 export function useNewsList() {
   const state = useStoreState();
-  const setState = useStoreSetState();
+  const dispatch = useStoreDispatch();
   const list = state.news.ids;
   const hasFetchedEver = list !== null;
 
@@ -16,25 +16,15 @@ export function useNewsList() {
 
     HackerNewsApi.getNewsList()
       .then((news) => {
-        setState((state) => {
-          return {
-            ...state,
-            news: {
-              ...state.news,
-              ids: news.slice(0, 10),
-            },
-          };
+        dispatch({
+          type: 'set_news_ids',
+          payload: news.slice(0, 10),
         });
       })
       .catch(() => {
-        setState((state) => {
-          return {
-            ...state,
-            news: {
-              ...state.news,
-              ids: [],
-            },
-          };
+        dispatch({
+          type: 'set_news_ids',
+          payload: [],
         });
       });
   }, []);

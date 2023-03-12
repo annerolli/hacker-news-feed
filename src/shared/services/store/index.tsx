@@ -3,7 +3,8 @@ import {
   FC,
   PropsWithChildren,
   useContext,
-  useState,
+  useReducer,
+  Dispatch,
 } from 'react';
 import { TNewsItem, TNewsItemId, TNewsList } from '../hacker-news-api';
 
@@ -16,7 +17,7 @@ type TState = {
 
 type TStore = {
   state: TState;
-  setState: (cb: (state: TState) => TState) => void;
+  dispatch: Dispatch<TStoreAction>;
 };
 
 export const initialState: TState = {
@@ -28,11 +29,46 @@ export const initialState: TState = {
 
 export const StoreContext = createContext<TStore | undefined>(undefined);
 
+type TStoreActionType = 'set_news_ids' | 'add_news_item';
+
+type TStoreAction = {
+  type: TStoreActionType;
+  payload: any;
+};
+
+function storeReducer(state: TState, action: TStoreAction): TState {
+  switch (action.type) {
+    case 'set_news_ids':
+      return {
+        ...state,
+        news: {
+          ...state.news,
+          ids: action.payload,
+        },
+      };
+
+    case 'add_news_item':
+      return {
+        ...state,
+        news: {
+          ...state.news,
+          storage: {
+            ...state.news.storage,
+            [action.payload.id]: action.payload,
+          },
+        },
+      };
+
+    default:
+      return state;
+  }
+}
+
 export const StoreProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [state, setState] = useState<TState>(initialState);
+  const [state, dispatch] = useReducer(storeReducer, initialState);
 
   return (
-    <StoreContext.Provider value={{ state, setState }}>
+    <StoreContext.Provider value={{ state, dispatch }}>
       {children}
     </StoreContext.Provider>
   );
@@ -53,9 +89,9 @@ export function useStoreState() {
   return store.state;
 }
 
-export function useStoreSetState() {
+export function useStoreDispatch() {
   const store = useStoreContext();
-  return store.setState;
+  return store.dispatch;
 }
 
 // export function useStoreSelector(selector: (state: TState) => unknown) {
