@@ -7,7 +7,10 @@ export function useFetchItemsController(itemIds: TItemId[]) {
   const fetchComment = useFetchComment();
 
   useEffect(() => {
-    if (itemIds.length === 0) return;
+    if (itemIds.length === 0) {
+      setItems([]);
+      return;
+    }
 
     setLoading(true);
 
