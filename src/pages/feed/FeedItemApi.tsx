@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { TItemId } from '../../shared/services/hacker-news-api';
-import { useNewsItem } from '../../entities/news';
-import { FeedItem } from './FeedItem';
+import { NewsItemCard, useNewsItem } from '../../entities/news';
+import { OpenNewsItem } from './ui/open-news-item';
 
 type TProps = {
   itemId: TItemId;
@@ -14,5 +14,7 @@ export const FeedItemApi: FC<TProps> = ({ itemId }) => {
     return null;
   }
 
-  return <FeedItem data={news} />;
+  return (
+    <NewsItemCard data={news} actions={<OpenNewsItem itemId={itemId} />} />
+  );
 };
