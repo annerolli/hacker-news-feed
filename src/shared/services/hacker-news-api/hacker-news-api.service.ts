@@ -53,9 +53,3 @@ class HackerNewsApi implements IHackerNewsApi {
 const instance = new HackerNewsApi();
 
 export { instance as HackerNewsApi };
-
-instance
-  .getStory({
-    itemId: 35121963,
-  })
-  .then(console.log, console.log);

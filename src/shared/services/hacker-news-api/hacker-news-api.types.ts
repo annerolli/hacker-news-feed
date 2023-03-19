@@ -1,6 +1,7 @@
 export type TItem = {
   id: TItemId;
   type?: 'story' | 'comment';
+  url?: string;
   title?: string;
   text?: string;
   by?: string;
@@ -17,7 +18,7 @@ export type TGetItemOptions = {
 };
 
 export type TStory = TItem &
-  Required<Pick<TItem, 'title' | 'text' | 'by' | 'time' | 'score'>> & {
+  Required<Pick<TItem, 'title' | 'text' | 'by' | 'time' | 'score' | 'url'>> & {
     type: 'story';
   };
 
