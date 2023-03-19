@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { FeedItemApi } from './FeedItemApi';
-import { List, ListItem, Typography } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import { useNewsList } from '../../entities/news';
 
 export const Feed: FC = () => {
@@ -15,19 +15,14 @@ export const Feed: FC = () => {
   }
 
   return (
-    <List
-      sx={{
-        width: '100%',
-        maxWidth: 1140,
-        bgcolor: 'background.paper',
-        margin: '0 auto',
-      }}
-    >
-      {list.map((item) => (
-        <ListItem key={item} alignItems="flex-start">
-          <FeedItemApi itemId={item} />
-        </ListItem>
-      ))}
-    </List>
+    <Container>
+      <Grid container spacing={2}>
+        {list.map((item) => (
+          <Grid item key={item} xs={4}>
+            <FeedItemApi itemId={item} />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 };
