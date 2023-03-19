@@ -6,12 +6,15 @@ import {
   useReducer,
   Dispatch,
 } from 'react';
-import { TItemId, TStory } from '../hacker-news-api';
+import { TComment, TItemId, TStory } from '../hacker-news-api';
 
 type TState = {
   news: {
     ids: TItemId[] | null;
     storage: Record<TItemId, TStory>;
+  };
+  comments: {
+    storage: Record<TItemId, TComment>;
   };
 };
 
@@ -25,11 +28,14 @@ export const initialState: TState = {
     ids: null,
     storage: {},
   },
+  comments: {
+    storage: {},
+  },
 };
 
 export const StoreContext = createContext<TStore | undefined>(undefined);
 
-type TStoreActionType = 'set_news_ids' | 'add_news_item';
+type TStoreActionType = 'set_news_ids' | 'add_news_item' | 'add_comment';
 
 type TStoreAction = {
   type: TStoreActionType;
@@ -59,6 +65,15 @@ function storeReducer(state: TState, action: TStoreAction): TState {
         },
       };
 
+    case 'add_comment':
+      return {
+        ...state,
+        comments: {
+          storage: {
+            [action.payload.id]: action.payload,
+          },
+        },
+      };
     default:
       return state;
   }
