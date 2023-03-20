@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useFetchComment } from '../../../entities/comment';
 import { TComment, TItemId } from '../../../shared/services/hacker-news-api';
+
+/**
+ * @todo обработать ситуацию, когда приходит новый itemIds
+ */
 export function useFetchItemsController(itemIds: TItemId[]) {
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState<TComment[] | null>(null);
@@ -30,7 +34,7 @@ export function useFetchItemsController(itemIds: TItemId[]) {
         setLoading(false);
       }
     );
-  }, [itemIds]);
+  }, []);
 
   return {
     loading,
